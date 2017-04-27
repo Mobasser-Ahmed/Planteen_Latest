@@ -1,29 +1,70 @@
 package model;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import DataAccessLayer.MySqlDataAccess;
-import entity.UserInfo;
+import entity.User;
 
-public class UserRepository {
+public class UserRepository implements Repository<User>{
 
-	private static final String tableName = "userinfo";
-
+	private static final String tableName = "users";
+	
 	public UserRepository() {
+		
+	}
+	
+	@Override
+	public boolean add(User entity) {
+		try {
+
+			MySqlDataAccess da = new MySqlDataAccess();
+			Connection connection=da.getConnection();
+
+			  	java.sql.PreparedStatement stmt = connection.prepareStatement("INSERT INTO "+tableName+"(type,name,email,password,address,phone,gender,status)"
+			  			+ " Values(?,?,?,?,?,?,?,?)");
+
+	            stmt.setString(1,entity.getType());
+	            stmt.setString(2,entity.getName());
+	            stmt.setString(3,entity.getEmail());
+	            stmt.setString(4,entity.getPassword());
+	            stmt.setString(5,entity.getAddress());
+	            stmt.setString(6,entity.getPhone());
+	            stmt.setString(7,entity.getGender());
+	            stmt.setString(8,entity.getStatus());
+			
+			int result = stmt.executeUpdate();
+
+			if (result != 0) {
+				return true;
+			}
+			return false;
+
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 
-	public boolean addUser(UserInfo userinfo) {
+	@Override
+	public boolean edit(User entity) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	@Override
+	public boolean delete(int id) {
 		try {
 
 			MySqlDataAccess da = new MySqlDataAccess();
 
-			String query = "INSERT INTO " + tableName
-					+ "(name,username,email,password,type) VALUES('"
-					+ userinfo.getName() + "','" + userinfo.getUsername()
-					+ "','" + userinfo.getEmail() + "','"
-					+ userinfo.getPassword() + "','" + userinfo.getUserType()
-					+ "')";
-
+			String query = "DELETE FROM " + tableName + " WHERE userId ='"
+					+ id + "'";
 			// System.out.println(query);
 			int result = da.executeQuery(query);
 
@@ -36,11 +77,68 @@ public class UserRepository {
 			e.printStackTrace();
 			return false;
 		}
-
+		
 	}
 
-	public ArrayList<UserInfo> getAll() {
-		ArrayList<UserInfo> userlist = new ArrayList<UserInfo>();
+	@Override
+	public User getById(int id) {
+		try {
+			String query = "SELECT * FROM " + tableName + " where name = '"
+					+ id + "'";
+			MySqlDataAccess da = new MySqlDataAccess();
+			java.sql.ResultSet rs = da.getData(query);
+
+			int userId = rs.getInt("userId");
+			String type = rs.getString("type");
+			String name = rs.getString("name");
+			String email = rs.getString("email");
+			String password = rs.getString("password");
+			String address = rs.getString("adress");
+			String phone = rs.getString("phone");
+			String gender = rs.getString("gender");
+			String status = rs.getString("status");
+			
+			User users = new User(userId,type,name, email, password,address, phone,gender,status);
+				return users;
+			}
+		 catch (Exception e) {
+			System.out.println("exception found at UserRepository.java");
+		 }
+		return null;
+	}
+
+	@Override
+	public User getByName(String name) {
+		try {
+			String query = "SELECT * FROM " + tableName + " where name = '"
+					+ name + "'";
+			MySqlDataAccess da = new MySqlDataAccess();
+			java.sql.ResultSet rs = da.getData(query);
+
+			int userId = rs.getInt("userId");
+			String type = rs.getString("type");
+			String user_name = rs.getString("name");
+			String email = rs.getString("email");
+			String password = rs.getString("password");
+			String address = rs.getString("adress");
+			String phone = rs.getString("phone");
+			String gender = rs.getString("gender");
+			String status = rs.getString("status");
+			
+			User users = new User(userId,type, user_name, email, password,address, phone,gender,status);
+				return users;
+			}
+		 catch (Exception e) {
+			System.out.println("exception found at UserRepository.java");
+		}
+		return null;
+		
+	}
+
+	@Override
+	public ArrayList<User> getAll() {
+		
+		ArrayList<User> userList = new ArrayList<User>();
 		try {
 
 			String query = "SELECT * FROM " + tableName;
@@ -51,117 +149,27 @@ public class UserRepository {
 
 			while (rs.next()) {
 
-				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String name = rs.getString("name");
+				int userId = rs.getInt("userId");
 				String type = rs.getString("type");
+				String name = rs.getString("name");
 				String email = rs.getString("email");
-				UserInfo userinfo = new UserInfo(id, name, username, email,
-						password, type);
-				userlist.add(userinfo);
+				String password = rs.getString("password");
+				String address = rs.getString("adress");
+				String phone = rs.getString("phone");
+				String gender = rs.getString("gender");
+				String status = rs.getString("status");
+				
+				User users = new User(userId,type, name, email, password,address, phone,gender,status);
+				userList.add(users);
 
 			}
 
 		} catch (Exception e) {
 			System.out.println("exception found at UserRepository.java");
 		}
-		return userlist;
+		return userList;
 	}
 
-	public UserInfo getUserByUsername(String uname) {
-		try {
-			String query = "SELECT * FROM " + tableName + " where username = '"
-					+ uname + "'";
-			MySqlDataAccess da = new MySqlDataAccess();
-			java.sql.ResultSet rs = da.getData(query);
-
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String name = rs.getString("name");
-				String type = rs.getString("type");
-				String email = rs.getString("email");
-				UserInfo userinfo = new UserInfo(id, name, username, email,
-						password, type);
-				return userinfo;
-			}
-		} catch (Exception e) {
-			System.out.println("exception found at UserRepository.java");
-		}
-		return null;
-	}
-
-	public boolean editUserByUsername(UserInfo userinfo) {
-		try {
-
-			MySqlDataAccess da = new MySqlDataAccess();
-
-			String query = "UPDATE " + tableName + " SET name='"
-					+ userinfo.getName() + "',email='" + userinfo.getEmail()
-					+ "',password='" + userinfo.getPassword() + "',type='"
-					+ userinfo.getUserType() + "' WHERE username ='"
-					+ userinfo.getUsername() + "'";
-			// System.out.println(query);
-			int result = da.executeQuery(query);
-
-			if (result != 0) {
-				return true;
-			}
-			return false;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
-	public boolean deleteUserByUsername(String uname) {
-		try {
-
-			MySqlDataAccess da = new MySqlDataAccess();
-
-			String query = "DELETE FROM " + tableName + " WHERE username ='"
-					+ uname + "'";
-			// System.out.println(query);
-			int result = da.executeQuery(query);
-
-			if (result != 0) {
-				return true;
-			}
-			return false;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-
-	}
 	
-	public UserInfo getUserByEmail(String mail) {
-		try {
-			String query = "SELECT * FROM " + tableName + " where email = '"
-					+ mail + "'";
-			MySqlDataAccess da = new MySqlDataAccess();
-			java.sql.ResultSet rs = da.getData(query);
-
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String username = rs.getString("username");
-				String password = rs.getString("password");
-				String name = rs.getString("name");
-				String type = rs.getString("type");
-				String email = rs.getString("email");
-				UserInfo userinfo = new UserInfo(id, name, username, email,
-						password, type);
-				return userinfo;
-			}
-		} catch (Exception e) {
-			System.out.println("exception found at UserRepository.java");
-		}
-		return null;
-	}
-
+	
 }

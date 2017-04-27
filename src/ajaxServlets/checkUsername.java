@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.UserInfoController;
-import entity.UserInfo;
+import entity.User;
 
 
 @WebServlet("/checkUsername")
@@ -23,7 +23,7 @@ public class checkUsername extends HttpServlet {
 		  
 		  PrintWriter out = response.getWriter();
 		  
-		  UserInfo user = new UserInfoController().getUserByUsername(userid);  // specific user
+		  User user = new UserInfoController().getUserByUsername(userid);  // specific user
 	        
 	        
 	        if(user == null) {

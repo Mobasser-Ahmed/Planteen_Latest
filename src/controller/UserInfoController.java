@@ -2,7 +2,8 @@ package controller;
 
 import java.util.ArrayList;
 
-import entity.UserInfo;
+import entity.User;
+
 import model.UserRepository;
 
 public class UserInfoController {
@@ -11,28 +12,24 @@ UserRepository repository;
 	public UserInfoController(){
 		repository = new UserRepository();
 	}
-    public boolean addUser(UserInfo user){
-        return repository.addUser(user);
+    public boolean addUser(User user){
+        return repository.add(user);
     }
     
-    public ArrayList<UserInfo> getAll(){
+    public ArrayList<User> getAll(){
     	return repository.getAll();
     }
     
-    public UserInfo getUserByUsername(String uname){
-    	return repository.getUserByUsername(uname);
+    public User getUserByUsername(String name){
+    	return repository.getByName(name);
     }
     
-    public boolean editUserByUsername(UserInfo userinfo){
-    	return repository.editUserByUsername(userinfo);
+    public boolean editUserByUsername(User userinfo){
+    	return repository.edit(userinfo);
     }
     
-    public boolean deleteUserByUsername(String uname){
-    	return repository.deleteUserByUsername(uname);
-    }
     
-    public UserInfo getUserByEmail(String mail){
-    	return repository.getUserByEmail(mail);
-    }
+    
+  
     
 }
