@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.UserInfoController;
+import controller.UserController;
 import entity.User;
 
 
@@ -34,14 +34,14 @@ public class LoginServlet extends HttpServlet {
         
         out.println("start: "); 
         
-        ArrayList<User> users = new UserInfoController().getAll();  // all user
+        ArrayList<User> users = new UserController().getAll();  // all user
         
         for(User u: users){
         	  out.println("Name: " + u.getName()); 
         }
         
         
-        User user = new UserInfoController().getUserByUsername(userid);  // specific user
+        User user = new UserController().getByName(userid);  // specific user
         
         
         if(user != null)
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
         User user2 = new User("admin","Mohammad Tanvir Islam","tanvir@gmail.com","bolbona","vaag","0001011","male","status");    // Update
       	
       	
-      	out.println("UPDATE : " + new UserInfoController().editUserByUsername(user2) ); 
+      	out.println("UPDATE : " + new UserController().edit(user2) ); 
       	
       	
     	//out.println("Delete : " + new UserInfoController().deleteUserByUsername(userid));   // delete

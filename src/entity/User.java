@@ -1,6 +1,8 @@
 package entity;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 
+import jdk.internal.dynalink.beans.StaticClass;
 
 public class User {
 	private int userId;
@@ -12,7 +14,8 @@ public class User {
 	private String phone;
 	private String gender;
 	private String status;
-	
+	public static enum UserType{ADMIN,USER,STUFF}
+	public static enum UserStatus{ACTIVE,BANNED,DEACTIVE}
 
 	
 	public User( String type, String name, String email, String password, String address, String phone,String gender, String status) {
