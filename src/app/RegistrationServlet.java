@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.UserController;
 import entity.User;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
