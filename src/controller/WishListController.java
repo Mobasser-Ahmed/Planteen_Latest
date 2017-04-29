@@ -3,25 +3,24 @@ package controller;
 import java.util.ArrayList;
 
 import entity.Invoice;
-import model.InvoiceRepository;
+import entity.WishList;
+import model.WishListRepository;
 
-public class InvoiceController implements Controller<Invoice> {
-	InvoiceRepository  repository;
+public class WishListController implements Controller<WishList> {
 	
-	public InvoiceController() { // create repository by constructor
-		repository = new InvoiceRepository();
+	WishListRepository repository;
+	
+	public WishListController() {
+		repository= new WishListRepository();
 	}
 	
-	
 	@Override
-	public boolean add(Invoice entity) { 
+	public boolean add(WishList entity) {
 		return repository.add(entity);
 	}
 
-	
-
 	@Override
-	public boolean edit(Invoice entity) {
+	public boolean edit(WishList entity) {
 		return repository.edit(entity);
 	}
 
@@ -32,12 +31,12 @@ public class InvoiceController implements Controller<Invoice> {
 
 
 	@Override
-	public Invoice getById(int id) {
+	public WishList getById(int id) {
 		return repository.getById(id);
 	}
 
 	@Override
-	public Invoice getByName(String name) {
+	public WishList getByName(String name) {
 		//return repository.getByName(name);
 		System.out.println("not implemented ");
 		return null;
@@ -45,7 +44,7 @@ public class InvoiceController implements Controller<Invoice> {
 
 
 	@Override
-	public ArrayList<Invoice> getAll() {
+	public ArrayList<WishList> getAll() {
 		return repository.getAll();
 	}
 }
