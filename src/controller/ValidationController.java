@@ -11,8 +11,10 @@ public class ValidationController {
 	public static String err_email;
 	public static String err_pass;
 	public static String err_cpass;
+	
 	public static String err_address;
 	public static String err_phone;
+	
 	
 	
 	public static boolean isNull(String var){
@@ -48,6 +50,7 @@ public class ValidationController {
 		}
 		return pass!=null && cpass!=null && pass.equals(cpass);
 	}
+
 	//=========================Address checking==============================
 	public static boolean checkAddress(String address){
 		if(isNull(address)) {

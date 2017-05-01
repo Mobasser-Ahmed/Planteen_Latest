@@ -9,13 +9,22 @@
 
 <div class="container-fluid">
 	<div class="row animated fadeIn">
-		<c:forEach varStatus="loop" begin="1" end="50" step="1">
+	
+	
+	
+		 <%--  get by ajax
+		 
+	<div class="row animated fadeIn" id="showProducts">
+		 
+		 <c:forEach varStatus="loop" begin="1" end="3" step="1">
+		
 			<div class="col-sm-4 col-md-4">
 				<div class="card card-accent-default align-middle">
-					<h4 class="card-header card-title">Product ${loop.index}</h4>
+					<h4 class="card-header card-title">${products.productName}</h4>
 
 					<img class="card-img-top" style="max-height:20rem;width:auto" src="./img/test.jpg"
 						alt="Card image cap">
+						
 					<div class="card-block">
 
 						<p class="card-text">Some quick example text to build on the
@@ -49,24 +58,26 @@
 			</div>
 
 
-
-
+		</c:forEach>  --%>
+		
+		 <c:forEach items="${products}" var="product">
+		
 			<div class="col-sm-4 col-md-4">
 				<div class="card card-accent-default align-middle">
-					<h4 class="card-header card-title">Product ${loop.index}</h4>
+					<h4 class="card-header card-title">${product.productName}</h4>
 
-					<img class="card-img-top" style="max-height:20rem;width:auto" src="./img/test2.jpg"
+					<img class="card-img-top" style="max-height:20rem;width:auto" src="${product.imagePath}"
 						alt="Card image cap">
+						
 					<div class="card-block">
 
-						<p class="card-text">Some quick example text to build on the
-							card title and make up the bulk of the card's content.</p>
+						<p class="card-text">${product.productDetails}</p>
 
 						<ul class="list-group list-group-flush">
-							<li class="list-group-item text-center"><b>Price: 500BDT</b></li>
+							<li class="list-group-item text-center"><b>Price: ${product.sellingPrice} BDT</b></li>
 							<li class="list-group-item text-center">
 
-								<button type="button" onclick="window.location.href='viewItem.jsp?productId=${loop.index}'"
+								<button type="button" onclick="window.location.href='itemview?productId=${product.productId}'"
 									class="btn btn-outline-primary btn-lg btn-block">Product Details
 								</button>
 
@@ -74,7 +85,7 @@
 
 							<li class="list-group-item text-center">
 
-								<button type="button" class="btn btn-warning">
+								<button type="button" class="btn btn-warning" onClick = "addToCart(${product.productId})">
 									<i class="fa fa-check"></i>&nbsp; Add To Cart
 								</button>
 								<button type="button" class="btn btn-danger">
@@ -83,10 +94,14 @@
 
 							</li>
 						</ul>
+
+
 					</div>
 				</div>
 			</div>
-		</c:forEach>
+
+
+		</c:forEach> 
 
 	</div>
 

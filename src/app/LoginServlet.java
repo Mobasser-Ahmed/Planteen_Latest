@@ -43,8 +43,8 @@ public class LoginServlet extends HttpServlet {
         
         
         if(isValid){
-        	//=====written by moba for demo purpose====should be change=========///
-        	
+        	//set session
+        	// send to profile edit page
         }
         
         

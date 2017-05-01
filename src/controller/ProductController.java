@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
+
+import entity.Category;
 import entity.Product;
 import model.ProductRepository;
 
@@ -45,6 +47,19 @@ public class ProductController implements Controller<Product> {
 	@Override
 	public ArrayList<Product> getAll() {
 		return repository.getAll();
+	}
+
+	public ArrayList<Product> getAllProductByCategoryId(int id) {
+		return repository.getAllProductByCategoryId(id);
+	}
+	
+	
+	public ArrayList<Product> searchByName(String name){
+		return repository.searchByName(name);
+	}
+	
+	public ArrayList<Product> searchByNameCategoryId(String name,int id){
+		return repository.searchByNameCategoryId(name,id);
 	}
 	
 }

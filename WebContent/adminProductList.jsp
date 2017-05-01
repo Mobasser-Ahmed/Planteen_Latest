@@ -6,11 +6,15 @@
 <main class="main" style="background:white"> <!-- Breadcrumb -->
 
 
+<center>
+		<a href="#" class="btn btn-primary">Add New Product</a>
+	</center>
 
-<div class="row">
+	<div class="row">
 	<div class="col-md-12">
 		<!-- Advanced Tables -->
-
+		
+		
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="table-responsive">

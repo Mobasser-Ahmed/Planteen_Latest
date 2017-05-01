@@ -7,7 +7,7 @@
 	<li>
 
 
-		<form action="" method="post" class="form-2orizontal ">
+		<form action="home" method="GET" class="form-2orizontal ">
 			<div class="form-group row">
 				<div class="col-md-12">
 					<div class="input-group">
@@ -40,30 +40,41 @@
 
 
 
-						<div class="input-group-btn">
-							<button type="button" class="btn btn-primary dropdown-toggle"
+						
+							<!-- <button type="button" class="btn btn-primary dropdown-toggle" name="selectedCategory"
 								data-toggle="dropdown" aria-expanded="false">
 								<span class="selection"> All Categories </span><span
 									class="caret"></span>
-							</button>
-							<div class="dropdown-menu"
+							</button> -->
+							<%-- <div class="dropdown-menu"
 								style="max-height: 20rem; overflow-y: scroll">
 								<a class="dropdown-item" href="#">All Categories</a>
 								<div role="separator" class="dropdown-divider"></div>
 
 
-								<c:forEach varStatus="loop" begin="1" end="50" step="1">
-									<a class="dropdown-item" href="#">Category ${loop.index}</a>
+								<c:forEach items="${categories}" var="category">
+									<a class="dropdown-item" href="#">${category.categoryName}</a>
 								</c:forEach>
+							</div> --%>
+							
+							
+							<select class="btn btn-primary" name="searchCategoryId" style="max-height: 50px;overflow-y: scroll;">
+								<option value="0">All Categories</option>
+								<!-- <div role="separator" class="dropdown-divider"></div> -->
 
 
-							</div>
-						</div>
+								<c:forEach items="${categories}" var="category">
+									<option value="${category.categoryId}" >${category.categoryName}</option>
+								</c:forEach>
+								
+		
+							</select>
+						
 
 
 
 
-						<input type="text" id="input3-group3" name="input3-group3"
+						<input type="text" id="input3-group3" name="q"
 							class="form-control" placeholder="Search shop products...">
 						<div class="input-group-btn">
 							<button type="submit" class="btn btn-primary">
