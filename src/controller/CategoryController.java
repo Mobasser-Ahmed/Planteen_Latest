@@ -6,7 +6,7 @@ import model.CategoryRepository;
 
 public class CategoryController implements Controller<Category> {
 
-	CategoryRepository  repository;
+	private CategoryRepository  repository;
 	
 	public CategoryController() { // create repository by constructor
 		repository = new CategoryRepository();

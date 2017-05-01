@@ -25,7 +25,7 @@ public class Test extends HttpServlet {
 			user.getName();
 			//User user=cn.get("mobasser016@gmail.com");
 		
-			System.out.println(user.getName());
+			//System.out.println(user.getName());
 			
 			
 	}

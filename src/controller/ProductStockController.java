@@ -9,7 +9,7 @@ import model.ProductStockRepository;
 
 public class ProductStockController implements Controller<ProductStock> {
 	
-	ProductStockRepository repository;
+	private ProductStockRepository repository;
 	
 	public ProductStockController() {
 		repository= new ProductStockRepository();

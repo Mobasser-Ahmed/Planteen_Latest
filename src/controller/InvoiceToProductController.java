@@ -8,7 +8,7 @@ import model.InvoiceToProductRepository;
 
 public class InvoiceToProductController implements Controller<InvoiceToProduct>{
 	
-	InvoiceToProductRepository repository;
+	private InvoiceToProductRepository repository;
 	
 	public InvoiceToProductController() {
 		repository= new InvoiceToProductRepository();

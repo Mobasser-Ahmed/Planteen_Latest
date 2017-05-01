@@ -6,7 +6,7 @@ import entity.Invoice;
 import model.InvoiceRepository;
 
 public class InvoiceController implements Controller<Invoice> {
-	InvoiceRepository  repository;
+	private InvoiceRepository  repository;
 	
 	public InvoiceController() { // create repository by constructor
 		repository = new InvoiceRepository();

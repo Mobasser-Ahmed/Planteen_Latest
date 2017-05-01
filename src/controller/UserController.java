@@ -6,7 +6,7 @@ import entity.User;
 import model.UserRepository;
 
 public class UserController implements Controller<User> {
-	UserRepository repository;
+	private UserRepository repository;
 
 	public UserController() { // create repository by constructor
 		repository = new UserRepository();
@@ -23,6 +23,10 @@ public class UserController implements Controller<User> {
 	@Override
 	public boolean edit(User entity) {
 		return repository.edit(entity);
+	}
+	
+	public boolean editByUser(User entity) {
+		return repository.editByUser(entity);
 	}
 
 	@Override
@@ -48,6 +52,10 @@ public class UserController implements Controller<User> {
 	
 	public User getByEmail(String mail) { // search by email  , interface a nai
 		return repository.getByEmail(mail);
+	}
+	
+	public boolean validateUserReg(){
+		return false;
 	}
 
 }

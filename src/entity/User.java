@@ -1,9 +1,5 @@
 package entity;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
-
-import jdk.internal.dynalink.beans.StaticClass;
-
 public class User {
 	private int userId;
 	private String type;
@@ -30,6 +26,13 @@ public class User {
 		this.status = status;
 	}
 	
+	public User(int userId ,String address, String phone) {
+		this.userId=userId;
+		this.address = address;
+		this.phone = phone;
+	
+	}
+	
 	public User(int userId, String type, String name, String email, String password, String address, String phone,String gender, String status) {
 		this.userId = userId;
 		this.type = type;
@@ -42,7 +45,22 @@ public class User {
 		this.status = status;
 	}
 	
+
+	public User(String type, String name, String email, String password) {
+		//super();
+		this.type = type;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
 	
+	
+	public User(String email, String password) {
+		//super();
+		this.email = email;
+		this.password = password;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
@@ -98,5 +116,16 @@ public class User {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", type=" + type + ", name=" + name
+				+ ", email=" + email + ", password=" + password + ", address="
+				+ address + ", phone=" + phone + ", gender=" + gender
+				+ ", status=" + status + "]";
+	}
+	
+	
+	
+	
 	
 }

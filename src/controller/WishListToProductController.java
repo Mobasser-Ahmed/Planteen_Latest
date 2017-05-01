@@ -8,7 +8,7 @@ import model.WishListToProductRepository;
 
 public class WishListToProductController implements Controller<WishListToProduct> {
 	
-	WishListToProductRepository repository;
+	private WishListToProductRepository repository;
 	
 	public WishListToProductController() {
 		repository= new WishListToProductRepository();

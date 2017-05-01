@@ -5,7 +5,7 @@ import entity.Product;
 import model.ProductRepository;
 
 public class ProductController implements Controller<Product> {
-	ProductRepository repository;
+	private ProductRepository repository;
 	
 	public ProductController(){
 		repository= new ProductRepository();
