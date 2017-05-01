@@ -1,8 +1,10 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 
+import com.sun.crypto.provider.RSACipher;
 import com.sun.swing.internal.plaf.metal.resources.metal_zh_TW;
 
 import DataAccessLayer.MySqlDataAccess;
@@ -30,17 +32,24 @@ public class ProductRepository implements Repository<Product> {
 			dataAccess = new MySqlDataAccess();
 			connection=dataAccess.getConnection();
 			
-			statement = connection.prepareStatement("INSERT INTO "+tableName+" (productName,categoryId,sellingPrice,imagePath,productDetails,status)" + " Values(?,?,?,?,?,?)");  
+			statement = connection.prepareStatement("INSERT INTO "+tableName+" (productName,categoryId,sellingPrice,imagePath,productDetails,"
+					+ "buyingDate,buyingPrice,boughtunits,remainingUnits,addedBy,adminNote, isVisible)" + " Values(?,?,?,?,?,?,?,?,?,?,?,?)");  
 			
 			    statement.setString(1,entity.getProductName() );
 	            statement.setInt(2,entity.getCategoryId());
 	            statement.setFloat(3, entity.getSellingPrice());
 	            statement.setString(4, entity.getImagePath());
 	            statement.setString(5, entity.getProductDetails());
-	            statement.setString(6, entity.getStatus());
+	            statement.setDate(6, entity.getBuyingDate());
+	            statement.setFloat(7, entity.getBuyingPrice());
+	            statement.setInt(8, entity.getBoughtUnits());
+	            statement.setInt(9, entity.getRemainingUnits());
+	            statement.setString(10, entity.getAddedBy());
+	            statement.setString(11, entity.getAdminNote());
+	            statement.setBoolean(12, entity.getisVisible());
 	           
-			
-			int result = statement.executeUpdate();
+				System.out.println(statement);
+				int result = statement.executeUpdate();
 			
 
 			if (result != 0) {
@@ -50,6 +59,7 @@ public class ProductRepository implements Repository<Product> {
 
 		} 
 		catch (Exception e) {
+			System.out.println("error from product repository : add method");
 			e.printStackTrace();
 			return false;
 		}
@@ -64,7 +74,7 @@ public class ProductRepository implements Repository<Product> {
 			dataAccess = new MySqlDataAccess();
 			connection=dataAccess.getConnection();
 			
-			statement = connection.prepareStatement("UPDATE "+tableName+" SET productName=?,categoryId=?,sellingPrice=?,imagePath=?,productDetails=?,status=? WHERE productId=?");  
+			statement = connection.prepareStatement("UPDATE "+tableName+" SET productName=?,categoryId=?,sellingPrice=?,imagePath=?,productDetails=?, buyingDate=?,buyingPrice=?,boughtunits=?,remainingUnits=?,addedBy=?,adminNote=?, isVisible=?  WHERE productId=?");  
 			// we can use statement or we can use general query.  example: statement
 
 				
@@ -73,10 +83,16 @@ public class ProductRepository implements Repository<Product> {
             statement.setFloat(3, entity.getSellingPrice());
             statement.setString(4, entity.getImagePath());
             statement.setString(5, entity.getProductDetails());
-            statement.setString(6, entity.getStatus());
-            statement.setInt(7, entity.getProductId());
+            statement.setDate(6, entity.getBuyingDate());
+            statement.setFloat(7, entity.getBuyingPrice());
+            statement.setInt(8, entity.getBoughtUnits());
+            statement.setInt(9, entity.getRemainingUnits());
+            statement.setString(10, entity.getAddedBy());
+            statement.setString(11, entity.getAdminNote());
+            statement.setBoolean(12, entity.getisVisible());
+            statement.setInt(13, entity.getProductId());
             
-	            System.out.println(statement);
+	        System.out.println(statement);
 			int result = statement.executeUpdate();
 			
 			if (result != 0) {
@@ -86,6 +102,7 @@ public class ProductRepository implements Repository<Product> {
 
 		} 
 		catch (Exception e) {
+			System.out.println("error from product repository : edit method");
 			e.printStackTrace();
 			return false;
 		}
@@ -110,6 +127,7 @@ public class ProductRepository implements Repository<Product> {
 			return false;
 
 		} catch (Exception e) {
+			System.out.println("error from product repository : delete method");
 			e.printStackTrace();
 			return false;
 		}
@@ -136,11 +154,17 @@ public class ProductRepository implements Repository<Product> {
 			float sellingPrice= resultSet.getFloat("sellingPrice");
 			String imagePath= resultSet.getString("imagePath");
 			String productDetails= resultSet.getString("productDetails");
-			String status= resultSet.getString("status");
+			Date buyingDate= resultSet.getDate("buyingDate");
+			float buyingPrice= resultSet.getFloat("buyingPrice");
+			int boughtUnits=resultSet.getInt("boughtUnits");
+			int remainingUnits=resultSet.getInt("remainingUnits");
+			String addedBy=resultSet.getString("addedBy");
+			String adminNote=resultSet.getString("adminNote");
+			boolean isVisible= resultSet.getBoolean("isVisible");
 					
 					
 			
-			Product product = new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, status);
+			Product product = new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, buyingDate, buyingPrice, boughtUnits, remainingUnits, addedBy, adminNote, isVisible);
 				return product;
 			}
 			else 
@@ -148,7 +172,7 @@ public class ProductRepository implements Repository<Product> {
 		}
 		
 		 catch (Exception e) {
-			System.out.println("exception found at UserRepository.java while getById");
+			System.out.println("exception found at ProductRepository.java while getById");
 			return null;
 		 }
 		finally {
@@ -181,14 +205,21 @@ public class ProductRepository implements Repository<Product> {
 				float sellingPrice= resultSet.getFloat("sellingPrice");
 				String imagePath= resultSet.getString("imagePath");
 				String productDetails= resultSet.getString("productDetails");
-				String status= resultSet.getString("status");
+				Date buyingDate= resultSet.getDate("buyingDate");
+				float buyingPrice= resultSet.getFloat("buyingPrice");
+				int boughtUnits=resultSet.getInt("boughtUnits");
+				int remainingUnits=resultSet.getInt("remainingUnits");
+				String addedBy=resultSet.getString("addedBy");
+				String adminNote=resultSet.getString("adminNote");
+				boolean isVisible= resultSet.getBoolean("isVisible");
 			
 				
-				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, status);
+				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, buyingDate, buyingPrice, boughtUnits, remainingUnits, addedBy, adminNote, isVisible);
 				products.add(product);
 			}
 		} catch (Exception e) {
-			System.out.println("exception found at UserRepository.java while get all");
+			System.out.println("exception found at ProductRepository.java while get all");
+			e.printStackTrace();
 			return null;
 		}
 		finally {
@@ -201,7 +232,7 @@ public class ProductRepository implements Repository<Product> {
 		try {
 			String query = "SELECT * FROM " + tableName+ " WHERE categoryId="+id;
 			dataAccess = new MySqlDataAccess();
-
+			System.out.println(query);
 			resultSet = dataAccess.getData(query);
 
 			while (resultSet.next()) {
@@ -212,18 +243,19 @@ public class ProductRepository implements Repository<Product> {
 				float sellingPrice= resultSet.getFloat("sellingPrice");
 				String imagePath= resultSet.getString("imagePath");
 				String productDetails= resultSet.getString("productDetails");
-				String status= resultSet.getString("status");
+				boolean isVisible= resultSet.getBoolean("isVisible");
 			
 				
-				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, status);
+				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, isVisible);
 				products.add(product);
 			}
 		} catch (Exception e) {
-			System.out.println("exception found at ProductRepository.java while get all");
+			System.out.println("exception found at ProductRepository.java while getAllProductByCategoryId");
+			e.printStackTrace();
 			return null;
 		}
 		finally {
-			closeConnection("getAll()");
+			closeConnection("getAllProductByCategoryId()");
 		}
 		return products;
 	}
@@ -238,7 +270,7 @@ public class ProductRepository implements Repository<Product> {
 			String query = "SELECT * FROM " + tableName+ " WHERE productName LIKE '%"+name+"%'";
 		
 			dataAccess = new MySqlDataAccess();
-
+			System.out.println(query);
 			resultSet = dataAccess.getData(query);
 			
 			
@@ -251,10 +283,10 @@ public class ProductRepository implements Repository<Product> {
 				float sellingPrice= resultSet.getFloat("sellingPrice");
 				String imagePath= resultSet.getString("imagePath");
 				String productDetails= resultSet.getString("productDetails");
-				String status= resultSet.getString("status");
+				boolean isVisible= resultSet.getBoolean("isVisible");
 			
 				
-				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, status);
+				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, isVisible);
 				products.add(product);
 			}
 		} catch (Exception e) {
@@ -275,7 +307,7 @@ public ArrayList<Product> searchByNameCategoryId(String name,int id){
 		String query = "SELECT * FROM " + tableName+ " WHERE productName LIKE '%"+name+"%' AND categoryId="+id;
 	
 		dataAccess = new MySqlDataAccess();
-
+		System.out.println(query);
 		resultSet = dataAccess.getData(query);
 		
 		
@@ -288,10 +320,10 @@ public ArrayList<Product> searchByNameCategoryId(String name,int id){
 			float sellingPrice= resultSet.getFloat("sellingPrice");
 			String imagePath= resultSet.getString("imagePath");
 			String productDetails= resultSet.getString("productDetails");
-			String status= resultSet.getString("status");
+			boolean isVisible= resultSet.getBoolean("isVisible");
 		
 			
-			Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, status);
+			Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, isVisible);
 			products.add(product);
 		}
 	} catch (Exception e) {

@@ -35,7 +35,7 @@
 													<!-- Modal Button -->
 													<button type="button" class="btn btn-primary"
 														data-toggle="modal" data-target="#primaryModal${category.categoryId}">
-														Products</button>	
+														Edit</button>	
 												</td>
 			
 											</tr>
@@ -84,14 +84,13 @@
 				
 				
 				
-<c:forEach items="${users}" var="user">
+<c:forEach items="${categories}" var="category">
 
-	<div class="modal fade" id="primaryModal${user.userId}" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="primaryModal${category.categoryId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-primary" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">${user.name}</h4>
+					<h4 class="modal-title">${category.categoryName}</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">X</span>
@@ -109,47 +108,23 @@
 						<div class="col-sm-16">
 
                             <div class="card">
-                                <div class="card-header">
-                                    <strong>User Details</strong>
+                                    <div class="card-block">
+                                    <div class="form-group">
                                     
-                                </div>
-                                <div class="card-block">
-                                    <div class="form-group">
-                                        <label for="company">Address</label>
-                                        <input type="text" class="form-control" id="company" value="${user.address }"disabled>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="vat">Email</label>
-                                        <input type="text" class="form-control" id="vat" value="${user.email }"disabled>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="street">Gender</label>
-                                        <input type="text" class="form-control" id="street" value="${user.gender }"disabled>
-                                    </div>
-
                                     
-
-                                        <div class="form-group ">
-                                            <label for="city">Register Date</label>
-                                            <input type="text" class="form-control" id="city" value="Date not found"disabled>
-                                        </div>
-
-                                   
-
-                                   
-
+                                    <form>
+                                        <label for="company">Category Name</label>
+                                        <input type="text" class="form-control" id="company" value="${category.categoryName }">
+                                        
+                                        
+                                    </form>         
+                                    </div>
                                  
                                 </div>
                             </div>
 
                         </div>
-				
-				
-				
-
-					</div>
+				</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">Done</button>
@@ -179,11 +154,7 @@
 
 			<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
 
-			<script>
-				$(document).ready(function() {
-					$('#dataTables-example').dataTable();
-				});
-			</script>
+		
 
 
 </main>

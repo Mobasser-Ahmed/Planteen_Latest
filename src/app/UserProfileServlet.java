@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import controller.UserController;
 import controller.ValidationController;
@@ -34,6 +35,7 @@ public class UserProfileServlet extends HttpServlet {
 		System.out.println("this is id"+ id);
 		User user= new UserController().getById(id);
 		System.out.println(user.getName());
+		
 		
 	
 		
