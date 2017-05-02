@@ -261,6 +261,49 @@ public class ProductRepository implements Repository<Product> {
 	}
 	
 	
+	public ArrayList<Product> getAllwithCategoryName() {
+		ArrayList<Product> products = new ArrayList<Product>();
+		try {
+
+			String query = "SELECT * FROM " + tableName + ", categories WHERE products.categoryId = categories.categoryId";
+
+			dataAccess = new MySqlDataAccess();
+
+			resultSet = dataAccess.getData(query);
+
+			while (resultSet.next()) {
+
+				int productId=resultSet.getInt("productId");
+				String productName=resultSet.getString("productName");	
+				int categoryId = resultSet.getInt("categoryId");
+				float sellingPrice= resultSet.getFloat("sellingPrice");
+				String imagePath= resultSet.getString("imagePath");
+				String productDetails= resultSet.getString("productDetails");
+				Date buyingDate= resultSet.getDate("buyingDate");
+				float buyingPrice= resultSet.getFloat("buyingPrice");
+				int boughtUnits=resultSet.getInt("boughtUnits");
+				int remainingUnits=resultSet.getInt("remainingUnits");
+				String addedBy=resultSet.getString("addedBy");
+				String adminNote=resultSet.getString("adminNote");
+				boolean isVisible= resultSet.getBoolean("isVisible");
+				String categoryName=resultSet.getString("categoryName");
+			
+				
+				Product product= new Product(productId, productName, categoryId, sellingPrice, imagePath, productDetails, buyingDate, buyingPrice, boughtUnits, remainingUnits, addedBy, adminNote, isVisible,categoryName);
+				products.add(product);
+			}
+		} catch (Exception e) {
+			System.out.println("exception found at ProductRepository.java while get all with category name");
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			closeConnection("getAll()");
+		}
+		return products;
+	}
+	
+	
 	
 	
 	
