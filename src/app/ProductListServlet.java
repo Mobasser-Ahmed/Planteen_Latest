@@ -35,7 +35,7 @@ public class ProductListServlet extends HttpServlet {
 		ArrayList<Category> categories = new ArrayList<Category>();
 		categories.addAll(new CategoryController().getAll());
 		
-		System.out.println(products);
+		//System.out.println(products);
 		
 		request.setAttribute("products", products);
 		request.setAttribute("categories", categories);

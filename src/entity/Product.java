@@ -107,6 +107,29 @@ public class Product {
 		this.isVisible = isVisible;
 	}
 
+
+
+
+
+	public Product(int productId, String productName, int categoryId, float sellingPrice, String imagePath,
+			String productDetails, float buyingPrice, int boughtUnits, int remainingUnits, String addedBy,
+			String adminNote, boolean isVisible) {
+	
+		this.productId = productId;
+		this.productName = productName;
+		this.categoryId = categoryId;
+		this.sellingPrice = sellingPrice;
+		this.imagePath = imagePath;
+		this.productDetails = productDetails;
+		this.buyingPrice = buyingPrice;
+		this.boughtUnits = boughtUnits;
+		this.remainingUnits = remainingUnits;
+		this.addedBy = addedBy;
+		this.adminNote = adminNote;
+		this.isVisible = isVisible;
+	
+	}
+
 	public int getProductId() {
 		return productId;
 	}

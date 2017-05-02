@@ -74,7 +74,7 @@ public class ProductRepository implements Repository<Product> {
 			dataAccess = new MySqlDataAccess();
 			connection=dataAccess.getConnection();
 			
-			statement = connection.prepareStatement("UPDATE "+tableName+" SET productName=?,categoryId=?,sellingPrice=?,imagePath=?,productDetails=?, buyingDate=?,buyingPrice=?,boughtunits=?,remainingUnits=?,addedBy=?,adminNote=?, isVisible=?  WHERE productId=?");  
+			statement = connection.prepareStatement("UPDATE "+tableName+" SET productName=?,categoryId=?,sellingPrice=?,imagePath=?,productDetails=?,  buyingPrice=?,boughtunits=?,remainingUnits=?,addedBy=?,adminNote=?, isVisible=?  WHERE productId=?");  
 			// we can use statement or we can use general query.  example: statement
 
 				
@@ -83,14 +83,14 @@ public class ProductRepository implements Repository<Product> {
             statement.setFloat(3, entity.getSellingPrice());
             statement.setString(4, entity.getImagePath());
             statement.setString(5, entity.getProductDetails());
-            statement.setDate(6, entity.getBuyingDate());
-            statement.setFloat(7, entity.getBuyingPrice());
-            statement.setInt(8, entity.getBoughtUnits());
-            statement.setInt(9, entity.getRemainingUnits());
-            statement.setString(10, entity.getAddedBy());
-            statement.setString(11, entity.getAdminNote());
-            statement.setBoolean(12, entity.getisVisible());
-            statement.setInt(13, entity.getProductId());
+         
+            statement.setFloat(6, entity.getBuyingPrice());
+            statement.setInt(7, entity.getBoughtUnits());
+            statement.setInt(8, entity.getRemainingUnits());
+            statement.setString(9, entity.getAddedBy());
+            statement.setString(10, entity.getAdminNote());
+            statement.setBoolean(11, entity.getisVisible());
+            statement.setInt(12, entity.getProductId());
             
 	        System.out.println(statement);
 			int result = statement.executeUpdate();
