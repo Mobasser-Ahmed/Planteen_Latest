@@ -9,7 +9,7 @@
 }
 
 .modal-body {
-	height: 35rem;
+	max-height: 35rem;
 	overflow-y: scroll;
 }
 -->
@@ -74,6 +74,11 @@
 											data-toggle="modal"
 											data-target="#deleteModal${product.productId}">Delete
 										</button>
+										
+										<button type="button" class="btn btn-primary"
+											data-toggle="modal"
+											data-target="#imageModal${product.productId}">Upload Image
+										</button>
 
 
 									</td>
@@ -116,7 +121,7 @@
 				<!-- /. MODAL Form 1 START  encType="multipart/form-data" -->
 
 
-				<form action="ProductListEdit" method="POST"  encType="multipart/form-data">
+				<form action="ProductListEdit" method="POST" >
 
 					<div class="modal-body">
 
@@ -135,7 +140,7 @@
 									<div class="form-group">
 										<input type="hidden" class="form-control" id="txt-productId"
 											name="txt_productId" value="${product.productId}" />
-										${product.productId}
+										
 									</div>
 
 									<div class="form-group">
@@ -461,6 +466,65 @@
 		<!-- /.modal-dialog -->
 	</div>
 </c:forEach> <%--################################## 				Delete modal end     ##################################################### --%>
+
+
+
+
+
+
+
+
+<%--################################################   Image  MODAL    start  ################################################################ --%>
+<c:forEach items="${products}" var="product">
+	<div class="modal fade" id="imageModal${product.productId}"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-primary" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">${product.productName}</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">X</span>
+					</button>
+				</div>
+				<!-- /. MODAL user details start -->
+				<div class="modal-body">
+					<div class="col-sm-16">
+						<div class="card">
+							<div class="card-block">
+								<img class="card-img-top" src="${product.imagePath}" alt="Card image cap">
+								${product.imagePath}
+								<div class="form-group">
+									<form action="Uploader" method="POST"  encType="multipart/form-data">
+										<label for="company">Upload Image to Server</label><br> 
+<%-- 										<input type="hidden" id="txt_id" name="txt-id" value="${product.productId}"> --%>
+											
+											
+										<div class="form-group">
+										<input type="file" name="image_path" value="selectimage" />
+										</div>
+										<input type="submit" class="btn btn-primary" value="Confirm" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+</c:forEach> <%--################################## 				image modal end     ##################################################### --%>
+
+
+
+
+
+
+
+
 <%---===========================================================ADD MODAL Start====================================================== --%>
 
 

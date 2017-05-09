@@ -3,10 +3,12 @@ package controller;
 
 
 public class ValidationController {
-	private static final String empty = " cannot be empty";
-	private static final String invalid = " is invalid";
-	private static final String mismatch = " do not match";
+	public static final String empty = " cannot be empty";
+	public static final String invalid = " is invalid";
+	public static final String mismatch = " do not match";
 	
+	//used in UserProfileServlet and UserOrdersServlet
+	//must remove these
 	public static String err_name;
 	public static String err_email;
 	public static String err_pass;

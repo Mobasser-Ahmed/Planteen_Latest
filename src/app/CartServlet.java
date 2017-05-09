@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.CategoryController;
-import entity.Cart;
+import entity.CartItem;
 import entity.Category;
 
 /**
@@ -32,13 +32,14 @@ public class CartServlet extends HttpServlet {
 		request.setAttribute("categories", category); 
 		
 		HttpSession session = request.getSession(true);
+		session.setMaxInactiveInterval(20*60);
 		
 		@SuppressWarnings("unchecked")
-		ArrayList<Cart> cList = (ArrayList<Cart>) session.getAttribute("cartList");
+		ArrayList<CartItem> cList = (ArrayList<CartItem>) session.getAttribute("cartList");
 		
 		if(cList==null){
 		
-			cList = new ArrayList<Cart>();
+			cList = new ArrayList<CartItem>();
 			
 /*				Cart ct = new Cart(1,"Mobile",500,1000,"./img/beats1.jpg");
 				cList.add(ct);
@@ -71,9 +72,9 @@ public class CartServlet extends HttpServlet {
 		System.out.println(c);*/
 		
 		 @SuppressWarnings("unchecked")
-		ArrayList<Cart> cl = (ArrayList <Cart>) session.getAttribute("cartList");
+		ArrayList<CartItem> cl = (ArrayList <CartItem>) session.getAttribute("cartList");
 		 
-		 for(Cart c : cl){
+		 for(CartItem c : cl){
 			 System.out.println(c);
 		 }
 	}

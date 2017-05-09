@@ -27,14 +27,15 @@ public class InvoiceToProductRepository implements Repository<InvoiceToProduct> 
 			dataAccess = new MySqlDataAccess();
 			connection=dataAccess.getConnection();
 			
-			statement = connection.prepareStatement("INSERT INTO "+tableName+" (invoiceId, productId, units ,  profitMade) Values(?,?,?,?)");
+			statement = connection.prepareStatement("INSERT INTO "+tableName+" (invoicePrimaryId, productId, units ,  profitMade , sellingPrice) Values(?,?,?,?,?)");
 			// we can use statement or we can use general query.  example: statement
 			    
-	            statement.setInt(1,entity.getInvoiceId());
+	            statement.setString(1,entity.getInvoiceId());
 	            statement.setInt(2,entity.getProductId());
 	            statement.setInt(3,entity.getUnits());
 	         
 	            statement.setFloat(4, entity.getProfitMade());
+	            statement.setFloat(5, entity.getSellingPrice());
 			
 	            System.out.println(statement);
 	            int result = statement.executeUpdate();
@@ -61,11 +62,11 @@ public class InvoiceToProductRepository implements Repository<InvoiceToProduct> 
 			dataAccess = new MySqlDataAccess();
 			connection=dataAccess.getConnection();
 			
-			statement = connection.prepareStatement("UPDATE "+tableName+" SET units=? WHERE productId=? AND invoiceId=?");  
+			statement = connection.prepareStatement("UPDATE "+tableName+" SET units=? WHERE productId=? AND invoicePrimaryId=?");  
 			// we can use statement or we can use general query.  example: statement
 			statement.setInt(1,entity.getUnits());
             statement.setInt(2,entity.getProductId());
-            statement.setInt(3,entity.getInvoiceId());
+            statement.setString(3,entity.getInvoiceId());
             
             System.out.println(statement);
 			int result = statement.executeUpdate();
@@ -98,7 +99,7 @@ public class InvoiceToProductRepository implements Repository<InvoiceToProduct> 
 				try {
 					dataAccess = new MySqlDataAccess();
 					
-					String query = "DELETE FROM " + tableName + " WHERE invoiceId ="+invoiceId+" AND productId="+productId+""; // we can use statement or we can use general query.  example: query
+					String query = "DELETE FROM " + tableName + " WHERE invoicePrimaryId ="+invoiceId+" AND productId="+productId+""; // we can use statement or we can use general query.  example: query
 					
 					int result = dataAccess.executeQuery(query);
 
@@ -124,24 +125,21 @@ public class InvoiceToProductRepository implements Repository<InvoiceToProduct> 
 		return null;
 	}
 	
-	public ArrayList<InvoiceToProduct> getInvoiceItems(int id) {
+	public ArrayList<InvoiceToProduct> getInvoiceItems(String invoicePrimaryId) {
 		ArrayList<InvoiceToProduct> invoiceToProducts = new ArrayList<InvoiceToProduct>();
 		try {
 			dataAccess = new MySqlDataAccess();		
-			String query = "SELECT * FROM " + tableName + " where invoiceId = '"+ id + "'";
+			String query = "SELECT * FROM " + tableName + " WHERE invoicePrimaryId = '"+ invoicePrimaryId + "'";
 			System.out.println(query);
 			resultSet = dataAccess.getData(query);	
 			while(resultSet.next()){	
-			int invoiceId = resultSet.getInt("invoiceId");
 			int productId = resultSet.getInt("productId");
 			int units= resultSet.getInt("units");
-			int availableStockId= resultSet.getInt("availableStockId");
-			float buyingPrice= resultSet.getFloat("buyingPrice");
-			float sellingPrice= resultSet.getFloat("sellingPrice");
 			float profitMade= resultSet.getFloat("profitMade");
+			float sellingPrice =  resultSet.getFloat("sellingPrice");
 			
 			
-			InvoiceToProduct invoiceToProduct= new InvoiceToProduct(invoiceId, productId, units,profitMade);
+			InvoiceToProduct invoiceToProduct= new InvoiceToProduct(invoicePrimaryId, productId, units,profitMade,sellingPrice);
 			invoiceToProducts.add(invoiceToProduct);
 			}			
 		}

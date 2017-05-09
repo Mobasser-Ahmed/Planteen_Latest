@@ -25,14 +25,27 @@ public class CategoryListEditServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		boolean isValid=true;
+		
 		int categoryId= Integer.parseInt(request.getParameter("txt-id"));
 		String categoryName= request.getParameter("txt-name");
 		
-		Category category= new Category(categoryId, categoryName);
+		if(categoryName== null || categoryName==""|| categoryName==" "){
+			isValid=false;
+		}
+	
+		if(isValid){
+			Category category= new Category(categoryId, categoryName.trim());
+			System.out.println("cat id "+categoryId);
+			System.out.println("cat name "+categoryName);
+			new CategoryController().edit(category);
+			System.out.println("updated");
+		}
+		else{
+			System.out.println("update failed");
+		}
 		
-		System.out.println("cat id "+categoryId);
-		System.out.println("cat name "+categoryName);
-		new CategoryController().edit(category);
+		
 		
 		
 		response.sendRedirect("CategoryList");

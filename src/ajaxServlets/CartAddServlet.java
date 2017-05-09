@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import controller.ProductController;
 import controller.ProductStockController;
-import entity.Cart;
+import entity.CartItem;
 import entity.Product;
 import entity.ProductStock;
 
@@ -36,26 +36,39 @@ public class CartAddServlet extends HttpServlet {
 			
 			
 			HttpSession session = request.getSession(true);
-			
-			
-			
+
 			@SuppressWarnings("unchecked")
-			ArrayList<Cart> cList = (ArrayList<Cart>) session.getAttribute("cartList");
+			ArrayList<CartItem> cList = (ArrayList<CartItem>) session.getAttribute("cartList");
 			
 			if(cList==null){
 				System.out.println("Null List");
-				cList = new ArrayList<Cart>();
-				Cart ct = new Cart(id,p.getProductName(),1,p.getSellingPrice(),p.getImagePath());
+				cList = new ArrayList<CartItem>();
+				CartItem ct = new CartItem(id,p.getProductName(),1,p.getSellingPrice(),p.getImagePath(),p.getBuyingPrice());
 				cList.add(ct);
 				System.out.println(ct);
 				
 			}
 			else {
-				Cart ct = new Cart(id,p.getProductName(),1,p.getSellingPrice(),p.getImagePath());
-				cList.add(ct);
-				System.out.println(ct);
+				boolean isAlreadyAdded = false;
+				//added by nabila starts
+				for(CartItem c : cList){
+					if(c.getProductId() == id){
+						 c.setQuantity(c.getQuantity()+1);
+						 isAlreadyAdded = true;
+					}
+				}
 				
-				for(Cart c : cList){
+				//added by nabila ends
+				
+				
+				if(!isAlreadyAdded){
+					CartItem ct = new CartItem(id,p.getProductName(),1,p.getSellingPrice(),p.getImagePath(),p.getBuyingPrice());
+					cList.add(ct);
+					System.out.println(ct);
+				}
+				
+
+				for(CartItem c : cList){
 					 System.out.println("new cart list: "+ c);
 				 }
 			}
@@ -64,17 +77,9 @@ public class CartAddServlet extends HttpServlet {
 			
 				
 			session.setAttribute("cartList", cList);
+			session.setMaxInactiveInterval(200*600);
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+
 			
 			
 		}catch(Exception e){

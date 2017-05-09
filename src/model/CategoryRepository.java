@@ -210,11 +210,35 @@ public class CategoryRepository implements Repository<Category>{
 	    try { if (connection != null) connection.close(); } catch (Exception e) {System.out.println("Exception at CategoryRepository.java, "+tracker+" at finally block CONNECTION");};
 	}
 
-
 	@Override
-	public Category getByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public Category getByName(String categoryName) {
+		try {
+			dataAccess = new MySqlDataAccess();
+			
+			String query = "SELECT * FROM " + tableName + " where categoryName = '"
+					+ categoryName + "'";
+			System.out.println(query);
+			resultSet = dataAccess.getData(query);
+		
+			if(resultSet.next()){
+				
+				int categoryId = resultSet.getInt("categoryId");
+				
+				
+				Category category = new Category(categoryId,categoryName);
+					return category;
+			}
+			else 
+				return null;
+		}
+		
+		 catch (Exception e) {
+			System.out.println("exception found at CategoryRepository.java while getByName");
+			return null;
+		 }
+		finally {
+			closeConnection("getByName("+categoryName+")");
+		}
+		
 	}
-	
 }

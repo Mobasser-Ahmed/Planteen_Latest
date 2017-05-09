@@ -25,10 +25,19 @@ public class CategoryListAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String categoryName= request.getParameter("txt-name");
+		if(categoryName!=null && categoryName!=""  && categoryName!=" "){
+			
+			Category category= new Category(categoryName.trim());
+			System.out.println("cat name "+categoryName);
+			new CategoryController().add(category);
+		}
+		else{
+			System.out.println("Wrong input");
+			categoryName= request.getParameter("txt-name");
+		}
 		
-		Category category= new Category(categoryName);
-		System.out.println("cat name "+categoryName);
-		new CategoryController().add(category);
+		
+		
 		
 		
 		response.sendRedirect("CategoryList");
